@@ -17,6 +17,13 @@ Route::group(['middleware' => ['web']],function (){
     Route::resource('/','IndexController@index');
 });
 
+
+//relatório
+
+    Route::get('/relatorio_ver',  ['uses'=>'RelatoriosController@relatoriosVer', 'as'=>'relatorios.ver']);
+
+
+
 Route::group(['middleware' => 'auth'],function (){
 
     Route::get('/associar-aluno', array('as' => 'associar_aluno', function()
@@ -138,6 +145,8 @@ Route::group(['middleware' => 'auth'],function (){
     Route::group(['middleware' => ['web']],function (){
         Route::resource('user','UserController');
     });
+
+
 
 });
 
