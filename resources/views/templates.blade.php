@@ -10,10 +10,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Gerenciador de Templates</title>
+    <title>SGTCC</title>
 
     <!-- Custom fonts for this template-->
     <link href="tema/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -55,10 +56,12 @@
 
     @if (Auth::check())
         <!-- Heading -->
-            <div class="sidebar-heading">
-                Cadastros
-            </div>
-        @if(Auth::user()->atuacao_id == 1 || Auth::user()->atuacao_id == 2)
+            @if(Auth::user()->atuacao_id != 6)
+                <div class="sidebar-heading">
+                    Cadastros
+                </div>
+        @endif
+        @if(Auth::user()->atuacao_id == 2)
             <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -88,7 +91,7 @@
                     </div>
                 </li>
         @endif
-        @if(Auth::user()->atuacao_id == 1)
+        @if(Auth::user()->atuacao_id == 3 || Auth::user()->atuacao_id ==4)
             <!-- Nav Item - Visao Professor Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisao" aria-expanded="true" aria-controls="collapseUtilities">
@@ -102,8 +105,9 @@
                         </div>
                     </div>
                 </li>
-
-                <!-- Nav Item - Area Restrita Collapse Menu -->
+        @endif
+        @if(Auth::user()->atuacao_id == 1 || Auth::user()->atuacao_id == 3)
+            <!-- Nav Item - Area Restrita Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArea" aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-fw fa-wrench"></i>
@@ -126,23 +130,21 @@
                 Outros
             </div>
 
-        @if(Auth::user()->atuacao_id != 6)
             <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Documentos</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="login.html">Templates</a>
-                            <a class="collapse-item" href="{{ route('btnTermo') }}">Termo TCC I</a>
-                            <a class="collapse-item" href="{{ route('btnTermo2') }}">Termo TCC II</a>
-                        </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Documentos</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('templates.index')  }}">Templates</a>
+                        <a class="collapse-item" href="{{route('btnTermo')}}">Termo TCC I</a>
+                        <a class="collapse-item" href="{{route('btnTermo2')}}">Termo TCC II</a>
                     </div>
-                </li>
-        @endif
-        <!-- Nav Item - Charts -->
+                </div>
+            </li>
+            <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
@@ -152,12 +154,14 @@
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
     @endif
+
     <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
 
-    </ul>    <!-- End of Sidebar -->
+    </ul>
+    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -303,37 +307,41 @@
                     </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
-
+                    @if (Auth::check())
                     <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->nome}}</span>
+                                <img class="img-profile rounded-circle" src="imagens/user.png">
                             </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Sair
-                            </a>
-                        </div>
-                    </li>
-
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </li>
+                    @else
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ route('login') }}">
+                                <span>Login</span></a>
+                        </li>
+                    @endif
                 </ul>
-
             </nav>
             <!-- End of Topbar -->
 
@@ -383,20 +391,33 @@
                     <div class="panel-footer" style="padding:0px;">
                         <table class="table">
                             <tr>
+
                                 <th>Nome</th>
                                 <th>Tipo</th>
                                 <th></th>
                             </tr>
                             @foreach($arquivos as $arquivo)
                                 <tr>
-                                    <td>{{$arquivo->file}}</td>
-                                    <td>  <a href="download/{{$arquivo->id}}" download="{{$arquivo->id}}" >Download</a></td>
-                                    <td><a href = 'delete/{{ $arquivo->id }}' >Delete</a></td>
 
+                                    <td>{{$arquivo->nome}}</td>
+                                    <td>{{$arquivo->tipo}}</td>
+                                    <td>
+                                        <a href="{{$arquivo->caminho}}" download="{{$arquivo->nome}}">
+                                            <button type="button" class="btn btn-primary">
+                                                <i class="glyphicon glyphicon-download">
+                                                    Download
+                                                </i>
+                                                </button>
+                                        </a>
+                                    </td>
+                                    <td>
+                    <a href="/delete/{{$arquivo->id}}" class="btn btn-outline btn-danger"
+                       title="Deseja realmente excluir o documento?" data-toggle="confirmation" data-singleton="true" data-popout="true">
+                        <i class="fa fa-trash-o fa-fw" title="Excluir o documento"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
-                    </div>
 
 
                 </div>
@@ -416,7 +437,7 @@
 
     </div>
     <!-- End of Content Wrapper -->
-
+    </div>
 </div>
 <!-- End of Page Wrapper -->
 
@@ -454,6 +475,10 @@
 
 <!-- Core plugin JavaScript-->
 <script src="tema/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="tema/js/demo/chart-pie-demo.js"></script>
+<script type="text/javascript" src="tema/vendor/jquery.js"></script>
+<script type="text/javascript" src="tema/vendor/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="tema/vendor/bootstrap-confirmation.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="tema/js/sb-admin-2.min.js"></script>
@@ -463,7 +488,6 @@
 
 <!-- Page level custom scripts -->
 <script src="tema/js/demo/chart-area-demo.js"></script>
-<script src="tema/js/demo/chart-pie-demo.js"></script>
 
 
 </body>

@@ -55,10 +55,12 @@
 
     @if (Auth::check())
         <!-- Heading -->
-            <div class="sidebar-heading">
-                Cadastros
-            </div>
-        @if(Auth::user()->atuacao_id == 1 || Auth::user()->atuacao_id == 2)
+            @if(Auth::user()->atuacao_id != 6)
+                <div class="sidebar-heading">
+                    Cadastros
+                </div>
+        @endif
+        @if(Auth::user()->atuacao_id == 2)
             <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -88,7 +90,7 @@
                     </div>
                 </li>
         @endif
-        @if(Auth::user()->atuacao_id == 1)
+        @if(Auth::user()->atuacao_id == 3 || Auth::user()->atuacao_id ==4)
             <!-- Nav Item - Visao Professor Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisao" aria-expanded="true" aria-controls="collapseUtilities">
@@ -102,8 +104,9 @@
                         </div>
                     </div>
                 </li>
-
-                <!-- Nav Item - Area Restrita Collapse Menu -->
+        @endif
+        @if(Auth::user()->atuacao_id == 1 || Auth::user()->atuacao_id == 3)
+            <!-- Nav Item - Area Restrita Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArea" aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-fw fa-wrench"></i>
@@ -126,23 +129,21 @@
                 Outros
             </div>
 
-        @if(Auth::user()->atuacao_id != 6)
             <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Documentos</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="login.html">Templates</a>
-                            <a class="collapse-item" href="{{ route('btnTermo') }}">Termo TCC I</a>
-                            <a class="collapse-item" href="{{ route('btnTermo2') }}">Termo TCC II</a>
-                        </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Documentos</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('templates.index')  }}">Templates</a>
+                        <a class="collapse-item" href="{{route('btnTermo')}}">Termo TCC I</a>
+                        <a class="collapse-item" href="{{route('btnTermo2')}}">Termo TCC II</a>
                     </div>
-                </li>
-        @endif
-        <!-- Nav Item - Charts -->
+                </div>
+            </li>
+            <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
@@ -152,6 +153,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
     @endif
+
     <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -278,37 +280,41 @@
                     </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
-
+                    @if (Auth::check())
                     <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->nome}}</span>
+                                <img class="img-profile rounded-circle" src="imagens/user.png">
                             </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Sair
-                            </a>
-                        </div>
-                    </li>
-
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </li>
+                    @else
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ route('login') }}">
+                                <span>Login</span></a>
+                        </li>
+                    @endif
                 </ul>
-
             </nav>
             <!-- End of Topbar -->
 
@@ -347,20 +353,39 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
+                                @if(!empty($info))
+                                    @php
+                                        $user = $info["user"];
+                                        $atuacoes = $info["atuacao"];
+                                        $cursos = $info["cursos"];
+                                    @endphp
+                                @endif
                                 @foreach($user as $u)
+                                    @php
+
+                                    @endphp
                                     <tr>
                                         <td>{{$u->nome}}</td>
                                         <td>{{ $u->email }}</td>
                                         <td>{{ $u->matricula }}</td>
                                         <td>{{ $u->telefone }}</td>
-                                        <td>{{ $u->curso()->get()->first()->nome_curso}}</td>
-                                        <td>{{ $u->perfil()->get()->first()->atuacao_nome}}</td>
+                                        @foreach($cursos as $curso)
+                                            @if($curso->id == $u->curso_id)
+                                                <td>{{ $curso->nome_curso}}</td>
+                                            @endif
+                                        @endforeach
+                                        @foreach($atuacoes as $atuacao)
+                                            @if($atuacao->id == $u->atuacao_id)
+                                                <td>{{ $atuacao->atuacao_nome}}</td>
+                                            @endif
+                                        @endforeach
+{{--                                        <td>{{ $u->curso()->get()->first()->nome_curso}}</td>--}}
+{{--                                        <td>{{ $u->perfil()->get()->first()->atuacao_nome}}</td>--}}
 
                                         <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUser{{$u->id}}">
                                                Editar
                                             </button></td>
                                         </th>
-
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="editUser{{$u->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -383,18 +408,19 @@
                                                             <div class="inputIcone form-group col-md-6">
                                                                 <input  id="nomeImport" type="text2" placeholder="Nome" value="{{$u->nome}}" name="nome">
                                                                 <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"> </i>
-{{--                                                                <input type="password" placeholder="Digite sua senha"  id="Senha" value="{{$u->password}}" name="password"><br>--}}
-{{--                                                                <i  aria-hidden="true"> </i>--}}
                                                             </div>
 
                                                             <div class="inputIcone form-group col-md-6">
                                                                 <select class=" formImport select2"  type="text2" id="sel1" name="atuacao_id">
-                                                                    <option value="{{$u->atuacao_id}}"selected="true" disabled="disabled">{{$u->perfil()->get()->first()->atuacao_nome}}</option>
-                                                                    <option value="2">Professor Orientador</option>
-                                                                    <option value="3">Professor de TCC</option>
-                                                                    <option value="4">Secretaria</option>
-                                                                    <option value="5">Coordenador</option>
-                                                                    <option value="6">Aluno</option>
+                                                                    @if(!empty($atuacoes))
+                                                                        @foreach($atuacoes as $atuacao)
+                                                                            @if($atuacao->id == $u->atuacao_id)
+                                                                                <option value="{{$atuacao->id}}" selected="true">{{$atuacao->atuacao_nome}}</option>
+                                                                            @else
+                                                                                <option value="{{$atuacao->id}}">{{$atuacao->atuacao_nome}}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
                                                                 </select>
                                                                 <i class="fa fa-user-shield fa-lg fa-fw" aria-hidden="true"> </i>
                                                             </div>
@@ -408,11 +434,15 @@
 
                                                             <div class="inputIcone form-group col-md-6">
                                                                 <select class="formImport select2"  type="text2"  onchange="" id="select_curso" name="curso_id">
-                                                                    <option value= {{$u->curso_id}} selected="true" disabled="disabled">{{$u->curso()->get()->first()->nome_curso}}</option>
-                                                                    <option value="1">SISTEMA DE INFORMAÇÃO</option>
-                                                                    <option value="2">DESIGN</option>
-                                                                    <option value="3">URBANISMO</option>
-                                                                    <option value="4">QUIMICA</option>
+                                                                    @if(!empty($cursos))
+                                                                        @foreach($cursos as $curso)
+                                                                            @if($curso->id == $u->curso_id)
+                                                                                <option value="{{$curso->id}}" selected="true">{{$curso->nome_curso}}</option>
+                                                                            @else
+                                                                                <option value="{{$curso->id}}">{{$curso->nome_curso}}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
                                                                 </select>
                                                                 <i class="fa fa-graduation-cap fa-lg fa-fw" aria-hidden="true"> </i>
                                                             </div>
@@ -446,7 +476,6 @@
                                                             <p class="descImport">Importar por Matrícula</p>
                                                             <input id="matriculaImport" type="number2" name="matricula2"><br>
                                                         </div>
-{{--                                                        </div>--}}
                                                         <button type="submit" class="btn btn-primary">Salvar mudanças</button>
                                                     </form>
                                                     <!-- </ fim do form> -->

@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Arquivos;
-use FontLib\Table\Type\name;
-use Illuminate\Http\File;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Http\Request;
+use DB;
 
 class ArquivosController extends Controller
 {
@@ -15,39 +12,44 @@ class ArquivosController extends Controller
     {
         return view('templates')->with('arquivos', Arquivos::get());
     }
-//Adicionar
+
+
+
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nome' => 'required',
 
-        /*
-        * O campo do form com o arquivo tinha o atributo name="file".
-        */
-        $file = $request->file('file');
+        ]);
+        $arquivo = new Arquivos;
 
-        if (empty($file)) {
-            abort(400, 'Nenhum arquivo foi enviado.');
+        if(is_null($request->input('nome'))){
+            $arquivo->nome = str_replace('.'.$request->arquivo->extension(),'',$request->arquivo->getClientOriginalName());
+        }else{
+            $arquivo->nome = $request->input('nome');
         }
-
-        $path = $file->store('uploads');
-        $file->save();
-        return back();
+        $arquivo->tamanho = $request->arquivo->getClientSize();
+        $arquivo->tipo = $request->arquivo->extension();
+        $arquivo->caminho = 'assets/arquivos/'.$request->arquivo->storeAs('', str_slug($arquivo->nome).'.'.$arquivo->tipo, 'upl_arquivos');
+        $arquivo->save();
+        return back()->with('mensagem', "Upload do arquivo '{$arquivo->nome}' realizado com sucesso.");
     }
 
-    //Excluir
-    public function destroy(Request $request) {
-       Arquivos::destroy($request->id);
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $data = Arquivos::findOrFail($id);
+        $data->delete();
+
         return redirect('/templates');
     }
-
-    //Download
-    public function download()
-    {
-
-
-    }
-
-
-
 
 
 }

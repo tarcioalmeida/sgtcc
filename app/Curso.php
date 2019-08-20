@@ -1,13 +1,22 @@
 <?php
 
 namespace App;
-
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
-class Relatorios extends Model
+class Curso extends Eloquent
 {
-    protected $fillable = ['titulo_projeto','area','descricao','semestre','grupo_pesquisa','ano','curso_id','tcc_id','aluno_id','professor_tcc_id','professor_orientador_id'];
+    protected $fillable = ['nome_curso'];
     protected $guarded = ['id', 'created_at', 'updated_at','deleted_at'];
-    protected $table = 'projeto';
-}
+    protected $table = 'curso';
 
+
+
+    public function usuario()
+    {
+        return $this->hasMany(User::class ,'curso_id','id');
+    }
+
+
+
+}

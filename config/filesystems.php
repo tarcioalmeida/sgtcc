@@ -55,7 +55,7 @@ return [
         ],
         'upl_arquivos' => [
             'driver' => 'local',
-            'root' => public_path().'/files'
+            'root' => public_path().'/assets/arquivos'
         ],
 
         's3' => [

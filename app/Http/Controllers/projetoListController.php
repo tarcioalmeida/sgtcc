@@ -20,7 +20,7 @@ class projetoListController extends Controller
                 //projetos que não tem aluno associado e o que o aluno etá associado
 
                 $professores = DB::select(DB::raw("select * from users 
-                                            inner join projeto on projeto.professor_orientador_id = users.id 
+                                            join projeto on projeto.professor_orientador_id = users.id 
                                             where users.atuacao_id = 2 and users.curso_id = $id group by users.id"));
                 if(count($professores)>0){
                     foreach($professores as $professor){
@@ -30,7 +30,7 @@ class projetoListController extends Controller
                                 ->where('aluno_id', null)
                                 ->orWhere('aluno_id', '=', Auth::user()->id)
                                 ->get();
-                            $idOrientador = $professor->professor_orientador_id;
+                            $idOrientador = $professor->id;
                             if(!empty($project)){
                                 $projetoProf[$idOrientador] = $project;
                             }
@@ -53,7 +53,8 @@ class projetoListController extends Controller
                             $project = DB::table('projeto')
                                 ->where('professor_orientador_id', "=",Auth::user()->id)
                                 ->get();
-                            $idOrientador = $professor->professor_orientador_id;
+
+                            $idOrientador = $professor->id;
                             if(!empty($project)){
                                 $projetoProf[$idOrientador] = $project;
                             }
@@ -75,7 +76,7 @@ class projetoListController extends Controller
                             $project = DB::table('projeto')
                                 ->where('professor_tcc_id', "=",Auth::user()->id)
                                 ->get();
-                            $idOrientador = $professor->professor_orientador_id;
+                            $idOrientador = $professor->id;
                             if(!empty($project)){
                                 $projetoProf[$idOrientador] = $project;
                             }
@@ -91,8 +92,8 @@ class projetoListController extends Controller
                 if(count($professores)>0){
                     foreach($professores as $professor){
                         if(isset($professor)){
-                            $project = DB::table('projeto')->where('professor_orientador_id', "=",$professor->professor_orientador_id)->get();
-                            $idOrientador = $professor->professor_orientador_id;
+                            $project = DB::table('projeto')->where('professor_orientador_id', "=",$professor->id)->get();
+                            $idOrientador = $professor->id;
                             if(!empty($project)){
                                 $projetoProf[$idOrientador] = $project;
                             }
@@ -108,8 +109,8 @@ class projetoListController extends Controller
             if(count($professores)>0){
                 foreach($professores as $professor){
                     if(isset($professor)){
-                        $project = DB::table('projeto')->where('professor_orientador_id', "=",$professor->professor_orientador_id)->get();
-                        $idOrientador = $professor->professor_orientador_id;
+                        $project = DB::table('projeto')->where('professor_orientador_id', "=",$professor->id)->get();
+                        $idOrientador = $professor->id;
                         if(!empty($project)){
                             $projetoProf[$idOrientador] = $project;
                         }

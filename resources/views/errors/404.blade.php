@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 
 <head>
 
@@ -49,101 +49,108 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
+    @if (Auth::check())
       <!-- Heading -->
-      <div class="sidebar-heading">
-        Cadastros
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa fa-graduation-cap"></i>
-          <span>Projeto</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('cadastro_de_projeto') }}">Cadastrar Projeto</a>
+        @if(Auth::user()->atuacao_id != 6)
+          <div class="sidebar-heading">
+            Cadastros
           </div>
-        </div>
-      </li>
+      @endif
+      @if(Auth::user()->atuacao_id == 2)
+        <!-- Nav Item - Pages Collapse Menu -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              <i class="fas fa-fw fa fa-graduation-cap"></i>
+              <span>Projeto</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('cadastro_de_projeto') }}">Cadastrar Projeto</a>
+              </div>
+            </div>
+          </li>
+      @endif
 
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-calendar"></i>
-          <span>Cronograma</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="utilities-color.html">TCC I</a>
-            <a class="collapse-item" href="utilities-border.html">TCC II</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Visao Professor Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisao" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa fa-users"></i>
-          <span>Turma</span>
-        </a>
-        <div id="collapseVisao" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="utilities-color.html">Orientando</a>
-            <a class="collapse-item" href="utilities-border.html">Turma</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Area Restrita Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArea" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Área Restrita</span>
-        </a>
-        <div id="collapseArea" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Usuários:</h6>
-            <a class="collapse-item" href="{{ route('usuarios') }}">Cadastro e importação</a>
-            <a class="collapse-item" href="{{ route('usuarios') }}">Painel de usuários</a>
-          </div>
-        </div>
-      </li>
-
+      @if(Auth::user()->atuacao_id == 1 || Auth::user()->atuacao_id == 3)
+        <!-- Nav Item - Utilities Collapse Menu -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+              <i class="fas fa-fw fa-calendar"></i>
+              <span>Cronograma</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="utilities-color.html">TCC I</a>
+                <a class="collapse-item" href="utilities-border.html">TCC II</a>
+              </div>
+            </div>
+          </li>
+      @endif
+      @if(Auth::user()->atuacao_id == 3 || Auth::user()->atuacao_id ==4)
+        <!-- Nav Item - Visao Professor Collapse Menu -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisao" aria-expanded="true" aria-controls="collapseUtilities">
+              <i class="fas fa-fw fa fa-users"></i>
+              <span>Turma</span>
+            </a>
+            <div id="collapseVisao" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="utilities-color.html">Orientando</a>
+                <a class="collapse-item" href="utilities-border.html">Turma</a>
+              </div>
+            </div>
+          </li>
+      @endif
+      @if(Auth::user()->atuacao_id == 1 || Auth::user()->atuacao_id == 3)
+        <!-- Nav Item - Area Restrita Collapse Menu -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArea" aria-expanded="true" aria-controls="collapseUtilities">
+              <i class="fas fa-fw fa-wrench"></i>
+              <span>Área Restrita</span>
+            </a>
+            <div id="collapseArea" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Usuários:</h6>
+                <a class="collapse-item" href="{{ route('usuarios') }}">Cadastro e importação</a>
+                <a class="collapse-item" href="{{route('list.index')  }}">Painel de usuários</a>
+              </div>
+            </div>
+          </li>
+      @endif
       <!-- Divider -->
-      <hr class="sidebar-divider">
+        <hr class="sidebar-divider">
 
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Outros
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Documentos</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="login.html">Templates</a>
-            <a class="collapse-item" href="{{ route('btnTermo') }}">Termo TCC I</a>
-            <a class="collapse-item" href="{{ route('btnTermo2') }}">Termo TCC II</a>
-          </div>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Outros
         </div>
-      </li>
 
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Relatórios</span></a>
-      </li>
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Documentos</span>
+          </a>
+          <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="{{route('templates.index')  }}">Templates</a>
+              <a class="collapse-item" href="{{route('btnTermo')}}">Termo TCC I</a>
+              <a class="collapse-item" href="{{route('btnTermo2')}}">Termo TCC II</a>
+            </div>
+          </div>
+        </li>
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+          <a class="nav-link" href="charts.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Relatórios</span></a>
+        </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+    @endif
 
-      <!-- Sidebar Toggler (Sidebar) -->
+    <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
@@ -306,37 +313,41 @@
             </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
-
+            @if (Auth::check())
             <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
+              <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->nome}}</span>
+                  <img class="img-profile rounded-circle" src="imagens/user.png">
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Sair
-                </a>
-              </div>
-            </li>
-
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Sair
+                  </a>
+                </div>
+              </li>
+            @else
+              <li class="nav-item active">
+                <a class="nav-link" href="{{ route('login') }}">
+                  <span>Login</span></a>
+              </li>
+            @endif
           </ul>
-
         </nav>
         <!-- End of Topbar -->
 

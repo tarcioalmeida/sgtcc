@@ -6,6 +6,7 @@ use App\Atuacao;
 use App\Curso;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -28,16 +29,33 @@ class UserController extends Controller
      */
     public function index( )
     {
-        $user = User::all();
+        $cursos = Curso::all();
+        if(Auth::check()) {
+            if (Auth::user()->atuacao_id == 3) {
+                $user = DB::table('users')->where('atuacao_id', '=', 6)->get();
+                $atuacao = DB::select(DB::raw("select * from atuacao where id = 6"));
+            }else{
+                $user = User::all();
+                $atuacao = DB::select(DB::raw("select * from atuacao"));
+            }
+        }
 
-        return view('/list',['user'=>$user]);
+        $info = [];
+        $info["user"] = $user;
+        $info["atuacao"] = $atuacao;
+        $info["cursos"] = $cursos;
+        return view('/list',['info'=>$info]);
     }
 
     public function load(){
         $cursos = Curso::all();
-        $atuacao = DB::select(DB::raw("select * from atuacao where id <> 1"));
-
-//        $atuacao = Atuacao::all();
+        if(Auth::check()){
+            if(Auth::user()->atuacao_id == 3){
+                $atuacao = DB::select(DB::raw("select * from atuacao where id = 6"));
+            }else{
+                $atuacao = DB::select(DB::raw("select * from atuacao where id <> 1"));
+            }
+        }
 
         $info = [];
         $info["cursos"]=$cursos;

@@ -15,11 +15,12 @@ class CreateArquivosTable extends Migration
     {
         Schema::create('arquivos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nome');
+            $table->string('tipo');
+            $table->string('tamanho');
+            $table->string('caminho');
             $table->string('file', 60);
             $table->string('descricao',150)->nullable();
-            $table->string('tipo',150)->nullable();
-            $table->string('tamanho')->nullable();
-            $table->string('caminho')->nullable();
             $table->integer('tcc_id')->unsigned()->nullable();
             $table->foreign('tcc_id')->references('id')->on('tcc_materia');
             $table->integer('professor_orientador_id')->unsigned()->nullable();

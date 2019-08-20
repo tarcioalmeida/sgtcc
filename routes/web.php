@@ -17,13 +17,6 @@ Route::group(['middleware' => ['web']],function (){
     Route::resource('/','IndexController@index');
 });
 
-
-//relatório
-
-    Route::get('/relatorio_ver',  ['uses'=>'RelatoriosController@relatoriosVer', 'as'=>'relatorios.ver']);
-
-
-
 Route::group(['middleware' => 'auth'],function (){
 
     Route::get('/associar-aluno', array('as' => 'associar_aluno', function()
@@ -31,13 +24,13 @@ Route::group(['middleware' => 'auth'],function (){
         return view('associar-aluno');
     }));
 
-
     Route::get('/associar-aluno/{id}',['as' =>'associar_aluno','uses'=>'AssociarAlunoController@index']);
 
     Route::get('/selecionar-projeto/{id}',['as' =>'associar_aluno_projeto','uses'=>'projetoListController@index']);
 
-    Route::get('/usuarios',['as' =>'usuarios','uses'=>'UserController@load']);
+    Route::get('/inserir-aluno-projeto/{projeto}/{aluno}',['as' =>'inserir_aluno_projeto','uses'=>'Controller@insereAluno']);
 
+    Route::get('/usuarios',['as' =>'usuarios','uses'=>'UserController@load']);
 
 //    Route::get('/usuarios', function () {
 //        return view('usuarios');
@@ -75,14 +68,16 @@ Route::group(['middleware' => 'auth'],function (){
         return view('termo2');
     });
 
+    #Upload e Download de arquivos
+
     Route::get('/templates', function () {
+
         return view('templates');
     });
-    Route::get('/templates','ArquivosController@store');
+    Route::resource('list','\App\Http\Controllers\UserController');
+    Route::resource('templates','\App\Http\Controllers\ArquivosController');
 
-    Route::get('/upload', function () {
-        return view('upload');
-    });
+    Route::get('/delete/{id}','ArquivosController@destroy');
 
     Route::get('/invoice', function () {
 
@@ -145,8 +140,6 @@ Route::group(['middleware' => 'auth'],function (){
     Route::group(['middleware' => ['web']],function (){
         Route::resource('user','UserController');
     });
-
-
 
 });
 

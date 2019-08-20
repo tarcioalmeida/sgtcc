@@ -19,7 +19,6 @@ class AssociarAlunoController extends Controller
             foreach($solicitacao as $soli){
                 $aluno[$soli->aluno_id] = DB::select(DB::raw("select u.nome,u.id from users as u where u.id = $soli->aluno_id"));
             }
-//            $cursoNome = DB::select(DB::raw("select * from curso where curso.id = $projeto[0]->curso_id"));
             $listAssociar["projeto"] = $projeto;
             $listAssociar["solicitacoes"] = $solicitacao;
             $listAssociar["alunos"] = $aluno;
